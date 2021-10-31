@@ -28,4 +28,8 @@ titulos = "META CERTIFICADO DIGITAL "
 qtd_agr = Banco.Contagem()
 qtd_ativos = Banco.Contagem("STATUS","Ativo")
 
-colunas_select = ["ID","NOME", "MUNICIPIO", "UF", "STATUS", "PARCEIRA"]
+#NOME,POSTO, MUNICIPIO, UF, TELEFONE, EMAIL, PARAMET, STATUS, TERMO, OBS, PARCEIRA, TREINAMENTO, DATA
+
+colunas_select = ["ID","NOME","POSTO","MUNICIPIO","UF","STATUS","PARCEIRA",
+            "DATA", "PARAMET", "TREINAMENTO","TERMO",
+            "TELEFONE","EMAIL"]

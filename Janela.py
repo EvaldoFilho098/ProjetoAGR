@@ -1,6 +1,8 @@
-from tkinter import Tk, StringVar, Frame,Entry,Label,Button,Menu,BooleanVar,Checkbutton,PhotoImage,END,RIGHT,LEFT,TOP,BOTTOM,CENTER,VERTICAL,Y,HORIZONTAL,X
+from tkinter import LabelFrame, Tk, StringVar, Frame,Entry,Label,Button,Menu,BooleanVar,Checkbutton,PhotoImage,END,RIGHT,LEFT,TOP,BOTTOM,CENTER,VERTICAL,Y,HORIZONTAL,X,N,E,S,W
 from tkinter import messagebox
 from tkinter import ttk
+from tkinter.constants import FALSE
+from typing import Sized
 import img
 from var import *
 from PIL import Image,ImageTk
@@ -63,43 +65,81 @@ frame_auxAtv.place(x=770, y=30)
 qtd_Atv = Label(frame_auxAtv,text=qtd_ativos, bg = cor_escura , fg="red", font=fonte_Destaques)
 qtd_Atv.place(relx=0.5, rely=0.5,anchor=CENTER)
 
-
+#, width = 525, height = 325, bg=cor_meta,relief="raise"
 #AMBIENTE DE EXIBICAO DE AGRS
-AGRs_Frame = Frame(Janela, width = 525, height = 325, bg=cor_escura,relief="raise")
+AGRs_Frame = LabelFrame(Janela,width = 525, height = 325)
 AGRs_Frame.place(x = 50,y=230)
+#AGRs_Frame.pack(padx=325,pady=130)
 
 ####################################################
-dadosCols = ("ID","NOME", "MUNICIPIO", "UF", "STATUS", "PARCEIRA")
-listagem = ttk.Treeview(AGRs_Frame,columns = dadosCols, show='headings', height = 15, selectmode='extended')
+dadosCols = ("ID","NOME","POSTO","CIDADE","UF","STATUS","PARCEIRA",
+            "DATA INICIO", "PARAMETRIZACAO", "TREINAMENTO","TERMO",
+            "TELEFONE","EMAIL")
+listagem = ttk.Treeview(AGRs_Frame,columns = dadosCols, height = 100)
 
 #print(dadosCols)
 #listagem.bind('<Double-1>',Mostrar)
-
-listagem.column("ID", width = 30)
+minw = 100
+#1
+listagem.column("ID", width = 10,minwidth=minw)
 listagem.heading("ID",text="ID")
-
-listagem.column("NOME", width = 120)
+#2
+listagem.column("NOME", width = 30,minwidth=minw)
 listagem.heading("NOME",text="NOME")
-
-listagem.column("MUNICIPIO", width = 120)
-listagem.heading("MUNICIPIO",text="MUNICIPIO")
-
-listagem.column("UF", width = 30)
+#3
+listagem.column("POSTO", width = 50,minwidth=minw)
+listagem.heading("POSTO",text="POSTO")
+#4
+listagem.column("CIDADE", width = 50,minwidth=minw)
+listagem.heading("CIDADE",text="CIDADE")
+#5
+listagem.column("UF", width = 30,minwidth=minw)
 listagem.heading("UF",text="UF")
-
-listagem.column("STATUS", width = 100)
+#6
+listagem.column("STATUS", width = 30,minwidth=minw)
 listagem.heading("STATUS",text="STATUS")
-
-listagem.column("PARCEIRA", width = 100)
+#7
+listagem.column("PARCEIRA", width = 30,minwidth=minw)
 listagem.heading("PARCEIRA",text="PARCEIRA")
+#8
+listagem.column("DATA INICIO", width = 50,minwidth=minw)
+listagem.heading("DATA INICIO",text="DATA INICIO")
+#9
+listagem.column("PARAMETRIZACAO", width = 30,minwidth=minw)
+listagem.heading("PARAMETRIZACAO",text="PARAMETRIZACAO")
+#10
+listagem.column("TREINAMENTO", width = 30,minwidth=minw)
+listagem.heading("TREINAMENTO",text="TREINAMENTO")
+#11
+listagem.column("TERMO", width = 30,minwidth=minw)
+listagem.heading("TERMO",text="TERMO")
+#12
+listagem.column("TELEFONE", width = 50,minwidth=minw)
+listagem.heading("TELEFONE",text="TELEFONE")
+#13
+listagem.column("EMAIL", width = 50,minwidth=minw)
+listagem.heading("EMAIL",text="EMAIL")
 
-listagem.pack(side=LEFT)
+#listagem.pack(side=LEFT,expand=FALSE)
+#listagem.place(x = 50, y = 500, width=500, height=350)
+#xsb.pack(side = LEFT, fill = X)
+#listagem.grid(row=0,column=0)
+#ysb.grid (row = 0, column = 1, sticky = N+S)
+#xsb.grid (row = 1,column = 0, sticky = E+W)
+#listagem.pack(side=LEFT,expand=FALSE)
+listagem.place(x = 0, y = 0, width = 525, height = 305)
 
 #BARRAS DE ROLAGEM DA VISUALIZACAO
-ysb = ttk.Scrollbar(AGRs_Frame, orient=VERTICAL, command=listagem.yview)
-listagem['yscroll'] = ysb.set
- 
-ysb.pack(side = RIGHT, fill = Y)
+ysb = ttk.Scrollbar(AGRs_Frame, orient=VERTICAL,command=listagem.yview)
+#ysb.pack(side = RIGHT, fill = Y)
+ysb.place(x=506,y=0,height=305)
+
+xsb = ttk.Scrollbar(AGRs_Frame, orient=HORIZONTAL,command=listagem.xview)
+xsb.place(x = 2, y = 305, width=510)
+#xsb.pack(side=BOTTOM,fill = X)
+
+listagem.configure(yscroll = ysb.set,xscrollcommand=ysb)
+listagem.configure(xscroll = xsb.set,xscrollcommand=xsb)
 
 # TEXTOS DOS CABEÇALHO
 for c in dadosCols:
@@ -107,7 +147,7 @@ for c in dadosCols:
 
 # INSRINDO OS ITENS
 for item in Banco.Select_Columns(colunas_select):
-    listagem.insert('', 'end', values=item)
+    listagem.insert('', 'end', values=item,)
 
 #AMBIENTE DE INFORMACOES DO AGR SELECIONADO
 info_AGR_Sel_Frame = Frame(Janela, width = 370, height = 325, bg=cor_escura,relief="raise")
