@@ -75,13 +75,44 @@ AGRs_Frame.place(x = 50,y=230)
 dadosCols = ("ID","NOME","POSTO","CIDADE","UF","STATUS","PARCEIRA",
             "DATA INICIO", "PARAMETRIZACAO", "TREINAMENTO","TERMO",
             "TELEFONE","EMAIL")
-listagem = ttk.Treeview(AGRs_Frame,columns = dadosCols, height = 100)
+listagem = ttk.Treeview(AGRs_Frame,columns = dadosCols,show='headings', height = 100, selectmode='browse')
+
+def Mostrar(event):
+    
+    
+        global listagem
+        #, lista_atendimentos,lista_certificados,lista_locais,lista_solicitantes
+        #Pega o item selecionado
+        """
+        "ID","NOME","POSTO","CIDADE","UF","STATUS","PARCEIRA",
+            "DATA INICIO", "PARAMETRIZACAO", "TREINAMENTO","TERMO",
+            "TELEFONE","EMAIL" """
+
+        nodeId_1 = listagem.focus()
+        
+        #Pega as informacoes do item
+        id_ = listagem.item(nodeId_1)['values'][0]
+        nome_ = listagem.item(nodeId_1)['values'][1]
+        posto_ = listagem.item(nodeId_1)['values'][2]
+        municipio_ = listagem.item(nodeId_1)['values'][3]
+        uf_ = listagem.item(nodeId_1)['values'][4]
+        status_ = listagem.item(nodeId_1)['values'][5]
+        parceira_ = listagem.item(nodeId_1)['values'][6]
+        data_ = listagem.item(nodeId_1)['values'][7]
+        par_ = listagem.item(nodeId_1)['values'][8]
+        trein_ = listagem.item(nodeId_1)['values'][9]
+        termo_ = listagem.item(nodeId_1)['values'][10]
+        telefone_ = listagem.item(nodeId_1)['values'][11]
+        email_ = listagem.item(nodeId_1)['values'][12]
+
+        Funcoes.Infos_Agrs(nome_,posto_, municipio_, uf_, telefone_, email_, par_, termo_, status_, parceira_, trein_,data_ )
+    
 
 #print(dadosCols)
-#listagem.bind('<Double-1>',Mostrar)
+listagem.bind('<Double-1>',Mostrar)
 minw = 100
 #1
-listagem.column("ID", width = 10,minwidth=minw)
+listagem.column("ID", width = 30,minwidth=30)
 listagem.heading("ID",text="ID")
 #2
 listagem.column("NOME", width = 30,minwidth=minw)
@@ -93,25 +124,25 @@ listagem.heading("POSTO",text="POSTO")
 listagem.column("CIDADE", width = 50,minwidth=minw)
 listagem.heading("CIDADE",text="CIDADE")
 #5
-listagem.column("UF", width = 30,minwidth=minw)
+listagem.column("UF", width = 30,minwidth=30)
 listagem.heading("UF",text="UF")
 #6
-listagem.column("STATUS", width = 30,minwidth=minw)
+listagem.column("STATUS", width = 30,minwidth=50)
 listagem.heading("STATUS",text="STATUS")
 #7
 listagem.column("PARCEIRA", width = 30,minwidth=minw)
 listagem.heading("PARCEIRA",text="PARCEIRA")
 #8
-listagem.column("DATA INICIO", width = 50,minwidth=minw)
+listagem.column("DATA INICIO", width = 50,minwidth=70)
 listagem.heading("DATA INICIO",text="DATA INICIO")
 #9
-listagem.column("PARAMETRIZACAO", width = 30,minwidth=minw)
+listagem.column("PARAMETRIZACAO", width = 30,minwidth=50)
 listagem.heading("PARAMETRIZACAO",text="PARAMETRIZACAO")
 #10
-listagem.column("TREINAMENTO", width = 30,minwidth=minw)
+listagem.column("TREINAMENTO", width = 30,minwidth=60)
 listagem.heading("TREINAMENTO",text="TREINAMENTO")
 #11
-listagem.column("TERMO", width = 30,minwidth=minw)
+listagem.column("TERMO", width = 30,minwidth=50)
 listagem.heading("TERMO",text="TERMO")
 #12
 listagem.column("TELEFONE", width = 50,minwidth=minw)
@@ -138,8 +169,8 @@ xsb = ttk.Scrollbar(AGRs_Frame, orient=HORIZONTAL,command=listagem.xview)
 xsb.place(x = 2, y = 305, width=510)
 #xsb.pack(side=BOTTOM,fill = X)
 
-listagem.configure(yscroll = ysb.set,xscrollcommand=ysb)
-listagem.configure(xscroll = xsb.set,xscrollcommand=xsb)
+listagem.configure(yscroll = ysb.set)
+listagem.configure(xscroll = xsb.set)
 
 # TEXTOS DOS CABEÇALHO
 for c in dadosCols:
@@ -302,9 +333,6 @@ def Cadastrar():
 
         #Parceira
         parc =  parcEntry.get()
-        print(lista_parc)
-        print(parc)
-        print(parc in lista_parc)
         if parc == "" or parc not in lista_parc:
             txt = txt + "Parceira Inválida!\n"
         
@@ -315,26 +343,23 @@ def Cadastrar():
         
         #Status
         Status = "Ativo"
-        if not chkValueStatus.get() :
+        if chkValueStatus.get() :
             Status = "Inativo"
 
         #Treinamento
         Trein = "Sim"
-        if not chkValueTrein.get():
+        if chkValueTrein.get():
             Trein = "Não"
-        print(Trein)
         
         #Parametrizacao
         Par = "Sim"
-        if not chkValuePar.get():
+        if chkValuePar.get():
             Par = "Não"
-        print(Par)
         
         #Termo
         Termo = "Sim"
-        if not chkValueTermo.get():
+        if chkValueTermo.get():
             Termo = "Não"
-        print(Termo)
 
         #CASO TUDO ESTEJA CORRETO
         if txt == "":
@@ -342,7 +367,7 @@ def Cadastrar():
             #CADASTRA NO BANCO DE DADOS
             conn,cursor = Banco.conectar()
 
-            Banco.Inserir(nome,posto,cidade,uf,tel,email,Par,Status,Termo,'',parc,Trein,data)
+            Banco.Inserir(nome,posto,cidade,uf,tel,email,Par,Status,Termo,parc,Trein,data)
 
             #MOSTRA MENSAGEM DE SUCESSO
             messagebox.showinfo(title="SUCESSO!", message="Atendimento Cadastrado com Sucesso!")
@@ -365,7 +390,6 @@ def Cadastrar():
             #ALTERA A QUANTIDADE DE ATENDIMENTOS
             qtd_agr = Banco.Contagem()
             qtd_ativos = len(Banco.Select_Where("STATUS","Ativo"))
-            print(qtd_ativos)
 
             qtd['text'] = str(qtd_agr)
             qtd_Atv['text'] = str(qtd_ativos)
@@ -373,13 +397,10 @@ def Cadastrar():
             qtd_Atv.place(relx=0.5, rely=0.5,anchor=CENTER)
             qtd.place(relx=0.5, rely=0.5,anchor=CENTER)
             
-            new = Banco.Select_Where("NOME",nome)[0]
+            uID = Banco.Ultima_ID()
+            new = Banco.Select_Where("ID",uID)[0]
             listagem.insert('', 'end', values=new)
-            listagem.pack(side=LEFT)
-            #ALTERA A LISTAGEM
-            # INSRINDO OS ITENS
-            #for item in Banco.Select_Columns(["ID","NOME", "MUNICIPIO", "UF", "STATUS", "PARCEIRA"]):
-                #listagem.insert('', 'end', values=item)
+            listagem.place(x = 0, y = 0, width = 525, height = 305)
 
 
             jan.destroy()
@@ -396,12 +417,13 @@ def Cadastrar():
     jan.mainloop()
 
 
+
+
 rsz_x = 25
 rsz_y = 25
 w_button = 30
 h_button = 30
 y_buttons = 35
-
 
 img_add= img.resizing(img.img_add_o,rsz_x,rsz_y) #icone de adicionar
 img_edi= img.resizing(img.img_edi_o,rsz_x,rsz_y) #icone de editar
@@ -442,9 +464,47 @@ saveButton = Button(infosFrame,image= img_sav, bg=cor, fg=cor_contraste, width =
 saveButton.place(x = 510 , y = y_buttons)
 TP.CreateToolTip(saveButton, text = 'Salvar')
 
+frame_Nome = Label(info_AGR_Sel_Frame, text= '',bg=cor_escura, fg = cor_contraste, font= fonte_Destaques)
+frame_Nome.place(x=x_info,y=0)
 
+frame_Status = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Status.place(x=x_info,y=y_inicio )
+frame_status_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+frame_status_img.place(x=75 ,y=y_inicio + 5) 
 
-Funcoes.Infos_Agrs("Evaldo","MATRIZ","Caratinga","MG","6789","evaldo@meta","Sim","Nao","Inativo","Safeweb","","SIM",data)
+frame_Posto = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Posto.place(x=x_info,y=y_inicio + y_info)
+
+frame_Municipio = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Municipio.place(x=x_info,y=y_inicio + y_info*2)
+
+frame_Email = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Email.place(x=x_info,y=y_inicio + y_info*3)
+
+frame_Tel = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Tel.place(x=x_info,y=y_inicio + y_info*4)
+
+frame_Parceiro = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Parceiro.place(x=x_info,y=y_inicio + y_info*5)
+
+frame_data = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_data.place(x=x_info,y=y_inicio + y_info*6)
+
+frame_Par = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Par.place(x=x_info,y=y_inicio + y_info*7)
+frame_Par_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+frame_Par_img.place(x=50,y=y_inicio + y_info*7 + 5)
+
+frame_Treino = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Treino.place(x=x_info,y=y_inicio + y_info*8)
+frame_Treino_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+frame_Treino_img.place(x=50,y=y_inicio + y_info*8 + 5)
+
+frame_Termo = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
+frame_Termo_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+frame_Termo_img.place(x=50,y=y_inicio + y_info*9 + 5)
+
 
 #Botao de Editar AGR
 #EdicaoButton = Button(infosFrame, text = "Editar AGR", bg=cor, fg=cor_contraste, width = 15)
