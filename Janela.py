@@ -1,4 +1,4 @@
-from tkinter import LabelFrame, Tk, StringVar, Frame,Entry,Label,Button,Menu,BooleanVar,Checkbutton,PhotoImage,END,RIGHT,LEFT,TOP,BOTTOM,CENTER,VERTICAL,Y,HORIZONTAL,X,N,E,S,W
+from tkinter import LabelFrame, Tk, StringVar,IntVar, Frame,Entry,Label,Button,Menu,BooleanVar,Checkbutton,PhotoImage,END,RIGHT,LEFT,TOP,BOTTOM,CENTER,VERTICAL,Y,HORIZONTAL,X,N,E,S,W
 from tkinter import messagebox
 from tkinter import ttk
 from tkinter.constants import FALSE
@@ -275,28 +275,36 @@ def Cadastrar():
 
     #Status
     chkValueStatus = BooleanVar() 
-    chkValueStatus.set(False)
-    chkStatus = Checkbutton(cadastroFrame, text='Ativo',font = fonte_Textos, var = chkValueStatus,bg=cor, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    #chkValueStatus.set(False)
+    chkStatus = Checkbutton(jan, text='Ativo',font = fonte_Textos, var = chkValueStatus,bg=cor, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    chkStatus.deselect()
     chkStatus.place(x= 10,y = y_inicio + y_cad*8)
+    #print(chkValueStatus.get())
 
     #Treinamento
     chkValueTrein = BooleanVar() 
-    chkValueTrein.set(False)
-    chkTrein = Checkbutton(cadastroFrame, text='Treinamento',font = fonte_Textos, var = chkValueTrein,bg=cor, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    #chkValueTrein.set(False)
+    chkTrein = Checkbutton(jan, text='Treinamento',font = fonte_Textos, var = chkValueTrein,bg=cor, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    chkTrein.deselect()
     chkTrein.place(x= 10,y = y_inicio + y_cad*9 + 5)
+    #print(chkValueTrein.get())
 
     #Parametrização
     chkValuePar = BooleanVar() 
-    chkValuePar.set(False)
-    chkPar = Checkbutton(cadastroFrame, text='Parametrização',var = chkValuePar,font = fonte_Textos,bg=cor, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    #chkValuePar.set(False)
+    chkPar = Checkbutton(jan, text='Parametrização',var = chkValuePar,font = fonte_Textos,bg=cor, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    chkPar.deselect()
     chkPar.place(x= 10,y = y_inicio + y_cad*10 + 10)
+    #print(chkValuePar.get())
 
     #Termo
     chkValueTermo = BooleanVar() 
-    chkValueTermo.set(False)
-    chkTermo = Checkbutton(cadastroFrame, text='Termo',var = chkValueTermo,bg=cor,font = fonte_Textos, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    #chkValueTermo.set(False)
+    chkTermo = Checkbutton(jan, text='Termo',var = chkValueTermo,bg=cor,font = fonte_Textos, activebackground = cor, fg=cor_contraste, selectcolor= cor)
+    chkTermo.deselect()
     chkTermo.place(x= 10,y = y_inicio + y_cad*11 + 15)
-
+    #print(chkValueTermo.get())
+    
     def Salvar():
         #Nome, Posto, Cidade, UF, email, telefone, parceira, data, status, treinamento, parametrizacao, termo
         txt = ""
@@ -343,22 +351,26 @@ def Cadastrar():
         
         #Status
         Status = "Ativo"
-        if chkValueStatus.get() :
+        print(chkValueStatus.get())
+        if not chkValueStatus.get():
             Status = "Inativo"
 
         #Treinamento
         Trein = "Sim"
-        if chkValueTrein.get():
+        print(chkValueTrein.get())
+        if not chkValueTrein.get():
             Trein = "Não"
         
         #Parametrizacao
         Par = "Sim"
-        if chkValuePar.get():
+        print(chkValuePar.get())
+        if  not chkValuePar.get():
             Par = "Não"
         
         #Termo
         Termo = "Sim"
-        if chkValueTermo.get():
+        print(chkValueTermo.get())
+        if not chkValueTermo.get():
             Termo = "Não"
 
         #CASO TUDO ESTEJA CORRETO
@@ -371,6 +383,11 @@ def Cadastrar():
 
             #MOSTRA MENSAGEM DE SUCESSO
             messagebox.showinfo(title="SUCESSO!", message="Atendimento Cadastrado com Sucesso!")
+
+            uID = Banco.Ultima_ID()
+            new = Banco.Select_Where("ID",uID)[0]
+            listagem.insert('', 'end', values=new)
+            listagem.place(x = 0, y = 0, width = 525, height = 305)
 
             #LIMPA AS SELEÇÕES E TEXTOS
             nomeEntry.delete(0,END)
@@ -397,10 +414,10 @@ def Cadastrar():
             qtd_Atv.place(relx=0.5, rely=0.5,anchor=CENTER)
             qtd.place(relx=0.5, rely=0.5,anchor=CENTER)
             
-            uID = Banco.Ultima_ID()
-            new = Banco.Select_Where("ID",uID)[0]
-            listagem.insert('', 'end', values=new)
-            listagem.place(x = 0, y = 0, width = 525, height = 305)
+            #uID = Banco.Ultima_ID()
+            #new = Banco.Select_Where("ID",uID)[0]
+            #listagem.insert('', 'end', values=new)
+            #listagem.place(x = 0, y = 0, width = 525, height = 305)
 
 
             jan.destroy()
@@ -415,8 +432,6 @@ def Cadastrar():
     cadastroButton.place(x = 90, y = 600 )
 
     jan.mainloop()
-
-
 
 
 rsz_x = 25

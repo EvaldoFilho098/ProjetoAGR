@@ -29,6 +29,8 @@ qtd_agr = Banco.Contagem()
 qtd_ativos = Banco.Contagem("STATUS","Ativo")
 
 x_info = 10
+x_plus = 6
+x_img = 80
 y_info = 27
 y_inicio = 50
 
