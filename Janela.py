@@ -251,7 +251,44 @@ def Excluir():
         pass
 
 def Alterar():
-    pass
+    #Criar Janela
+    global listagem 
+
+    nodeId_1 = listagem.focus()
+    id_ = listagem.item(nodeId_1)['values'][0]
+    nome_ = listagem.item(nodeId_1)['values'][1]
+    cpf_ = listagem.item(nodeId_1)['values'][2]
+    posto_ = listagem.item(nodeId_1)['values'][3]
+    municipio_ = listagem.item(nodeId_1)['values'][4]
+    uf_ = listagem.item(nodeId_1)['values'][5]
+    status_ = listagem.item(nodeId_1)['values'][6]
+    parceira_ = listagem.item(nodeId_1)['values'][7]
+    data_ = listagem.item(nodeId_1)['values'][8]
+    par_ = listagem.item(nodeId_1)['values'][9]
+    trein_ = listagem.item(nodeId_1)['values'][10]
+    termo_ = listagem.item(nodeId_1)['values'][11]
+    telefone_ = listagem.item(nodeId_1)['values'][12]
+    email_ = listagem.item(nodeId_1)['values'][13]
+
+    """ 
+    "ID","NOME","CPF","POSTO","MUNICIPIO","UF","STATUS",
+    "PARCEIRA","DATA", "PARAMET", "TREINAMENTO","TERMO",
+    "TELEFONE","EMAIL" 
+    """
+
+    Banco.Alterar("NOME","",id_)
+    Banco.Alterar("CPF","",id_)
+    Banco.Alterar("POSTO","",id_)
+    Banco.Alterar("MUNICIPIO","",id_)
+    Banco.Alterar("UF","",id_)
+    Banco.Alterar("STATUS","",id_)
+    Banco.Alterar("PARCEIRA","",id_)
+    Banco.Alterar("DATA","",id_)
+    Banco.Alterar("PARAMET","",id_)
+    Banco.Alterar("TREINAMENTO","",id_)
+    Banco.Alterar("TERMO","",id_)
+
+    #cidadeEntry.current(0)
 
 def Cadastrar():
     #Criar Janela
@@ -320,7 +357,7 @@ def Cadastrar():
     #CIDADE
     cidadeLabel = Label(cadastroFrame,text = "Cidade: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
     cidadeLabel.place(x = 10,y = y_inicio + y_cad*3 )
-    lista_cidade = ["Ponta Pora"]
+    lista_cidade = ["Ponta Pora","Campo Grande","Dourados"]
     cidadeEntry = AutocompleteCombobox(cadastroFrame, width = width_entry_p,background=cor)
     cidadeEntry.set_completion_list(lista_cidade)
     cidadeEntry.place(x = x_entry, y = y_inicio + y_cad*3 + 2 )
@@ -373,7 +410,6 @@ def Cadastrar():
     parcEntry.set_completion_list(lista_parc)
     parcEntry.place(x = x_entry, y = y_inicio + y_cad*7 + 2)
 
-    
     #Data
     def format_data(event = None):
     

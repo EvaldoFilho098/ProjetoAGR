@@ -64,7 +64,7 @@ def Select_Columns(lista):
 def Alterar(up, new, id):
     conn,cursor = conectar()
 
-    comando = "UPDATE AGR SET " + up + "='" + new + "' WHERE ID=" + id
+    comando = "UPDATE AGR SET " + up + "='" + new + "' WHERE ID=" + str(id)
     print(comando)
     cursor.execute(comando)
     

@@ -85,5 +85,7 @@ def Infos_Agrs(nome,cpf,posto, municipio, uf, tel, email, par, termo, status, pa
         Janela.frame_Termo_img.configure(image=img_termo)
     except:
         Janela.frame_Termo_img = Label(Janela.info_AGR_Sel_Frame,image=img_termo,bg=cor_escura)
-        
+
     Janela.frame_Termo_img.place(x=120,y=y_inicio + y_info*9 + 5)
+
+
