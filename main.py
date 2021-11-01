@@ -11,7 +11,4 @@ from tkinter import messagebox
 from var import *
 
 
-#VISUALIZACAO RAPIDA DE CADASTROS 
-#dadosCols = Banco.Select_Where()
-
 Janela.Janela.mainloop()

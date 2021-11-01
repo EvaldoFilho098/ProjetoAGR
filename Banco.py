@@ -6,12 +6,12 @@ def conectar():
     return conn,cursor
 
 # inserindo dados na tabela
-def Inserir(Nome,Posto,Municipio,UF,Telefone,Email,Paramet,Status,Termo,OBS,Parceira,Treinamento,data):
+def Inserir(Nome,cpf,Posto,Municipio,UF,Telefone,Email,Paramet,Status,Termo,Parceira,Treinamento,data):
     conn,cursor = conectar()
     cursor.execute("""
-        INSERT INTO AGR (NOME,POSTO, MUNICIPIO, UF, TELEFONE, EMAIL, PARAMET, STATUS, TERMO, OBS, PARCEIRA, TREINAMENTO, DATA)
+        INSERT INTO AGR (NOME,CPF,POSTO, MUNICIPIO, UF, TELEFONE, EMAIL, PARAMET, STATUS, TERMO, PARCEIRA, TREINAMENTO, DATA)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
-    """, (Nome,Posto, Municipio, UF, Telefone, Email, Paramet, Status, Termo, OBS, Parceira,Treinamento,data))
+    """, (Nome,cpf,Posto, Municipio, UF, Telefone, Email, Paramet, Status, Termo,Parceira,Treinamento,data))
     conn.commit()
     conn.close()
 
@@ -75,7 +75,7 @@ def Alterar(up, new, id):
 
 def Deletar(id):
     conn,cursor = conectar()
-    comando = "DELETE FROM AGR WHERE ID=" + id
+    comando = "DELETE FROM AGR WHERE ID=" + str(id)
     cursor.execute(comando)
 
     conn.commit()
@@ -99,6 +99,14 @@ def Contagem(Cnt='',Whr=''):
 
     return x
 
+def Ultima_ID():
+    conn,cursor = conectar()
+    comando = "SELECT * FROM AGR WHERE ID=(SELECT max(ID) FROM AGR)"
+    cursor.execute(comando)
+    x = str(cursor.fetchall()[0][0])
+    conn.close()
+
+    return x
     
 ###########################  TESTES  ##############################
 

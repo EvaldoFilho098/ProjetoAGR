@@ -5,20 +5,16 @@ from tkinter import ttk
 from var import *
 import img
 
-#def Inserir(Janela, Banco):
-#    pass
 
 #FUNÇÕES
-
-
 
 def Mensagem_Aviso(txt):
     ''' Aviso para caso falte alguma informação válida'''
     messagebox.showerror(title="Impossível Cadastrar Atendimento", message= txt)
 
-def Infos_Agrs(nome,posto, municipio, uf, tel, email, par, termo, status, parceira, obs, treinamento, data ):
+def Infos_Agrs(nome,cpf,posto, municipio, uf, tel, email, par, termo, status, parceira, treinamento, data ):
     
-    
+
     if par.upper() == "SIM":
         img_par = Janela.img_sim_men
     else:
@@ -39,52 +35,55 @@ def Infos_Agrs(nome,posto, municipio, uf, tel, email, par, termo, status, parcei
     else:
         img_treino = Janela.img_nao_men 
 
-    x_info = 10
-    y_info = 27
-    y_inicio = 50
+    nome = nome.split(' ')
+    if len(nome) > 1:
+        nome = nome[0] + ' ' + nome[-1]
+    Janela.frame_Nome.configure(text=nome)
+    cpf = "CPF: " + cpf
+    Janela.frame_cpf.configure(text=cpf)
+    status = "Status: " + status
+    Janela.frame_Status.configure(text= status)
+    try:
+        Janela.frame_status_img.configure(image=img_status)
+    except:
+        Janela.frame_status_img = Label(Janela.info_AGR_Sel_Frame,image=img_status,bg=cor_escura)
 
-    frame_Nome = Label(Janela.info_AGR_Sel_Frame, text= nome,bg=cor_escura, fg = cor_contraste, font= fonte_Destaques)
-    frame_Nome.place(x=x_info,y=0)
+    Janela.frame_status_img.place(x=130 ,y=y_inicio + 5)
 
-    frame_Status = Label(Janela.info_AGR_Sel_Frame, text='Situação: ' + status ,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Status.place(x=x_info,y=y_inicio )
-    frame_status_img = Label(Janela.info_AGR_Sel_Frame,image=img_status,bg=cor_escura)
-    frame_status_img.place(x=90 + len(status)*9 ,y=y_inicio + 5) 
+    Janela.frame_Posto.configure(text= "Posto: " + posto)
 
-    frame_Posto = Label(Janela.info_AGR_Sel_Frame, text='Posto:  ',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Posto.place(x=x_info,y=y_inicio + y_info)
+    Janela.frame_Municipio.configure(text="Cidade: "+ municipio + " - " + uf)
 
-    frame_Municipio = Label(Janela.info_AGR_Sel_Frame, text='Local:  '+ municipio + ' - ' + uf,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Municipio.place(x=x_info,y=y_inicio + y_info*2)
+    Janela.frame_Email.configure(text="E-mail: " + email)
 
-    frame_Email = Label(Janela.info_AGR_Sel_Frame, text='E-Mail:  ' + email,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Email.place(x=x_info,y=y_inicio + y_info*3)
+    Janela.frame_Tel.configure(text="Telefone: " + tel)
 
-    frame_Tel = Label(Janela.info_AGR_Sel_Frame, text='Telefone:  ' + tel,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Tel.place(x=x_info,y=y_inicio + y_info*4)
+    Janela.frame_Parceiro.configure(text="Parceira: "+ parceira)
 
-    frame_Parceiro = Label(Janela.info_AGR_Sel_Frame, text='Parceria:  ' + parceira,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Parceiro.place(x=x_info,y=y_inicio + y_info*5)
+    Janela.frame_data.configure(text="Data de Inicio: " + data)
 
-    frame_data = Label(Janela.info_AGR_Sel_Frame, text='Data de Inicio:  ' + data,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_data.place(x=x_info,y=y_inicio + y_info*6)
+    par = "Parametrização: " + par 
+    Janela.frame_Par.configure(text=par)
+    try:
+        Janela.frame_Par_img.configure(image=img_par)
+    except:
+        Janela.frame_Par_img = Label(Janela.info_AGR_Sel_Frame,image=img_par,bg=cor_escura)
+        
+    Janela.frame_Par_img.place(x=185,y=y_inicio + y_info*7 + 5)
+    
+    treinamento = "Treinamento: " + treinamento 
+    Janela.frame_Treino.configure(text=treinamento)
+    try:
+        Janela.frame_Treino_img.configure(image=img_treino)
+    except:
+        Janela.frame_Treino_img = Label(Janela.info_AGR_Sel_Frame,image=img_treino,bg=cor_escura)
+    Janela.frame_Treino_img.place(x=160,y=y_inicio + y_info*8 + 5)
 
-    frame_Par = Label(Janela.info_AGR_Sel_Frame, text='Parametrização ',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Par.place(x=x_info,y=y_inicio + y_info*7)
-    frame_Par_img = Label(Janela.info_AGR_Sel_Frame,image=img_par,bg=cor_escura)
-    frame_Par_img.place(x=140,y=y_inicio + y_info*7 + 5)
-
-    frame_Treino = Label(Janela.info_AGR_Sel_Frame, text='Treinamento ',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Treino.place(x=x_info,y=y_inicio + y_info*8)
-    frame_Treino_img = Label(Janela.info_AGR_Sel_Frame,image=img_treino,bg=cor_escura)
-    frame_Treino_img.place(x=117,y=y_inicio + y_info*8 + 5)
-
-    frame_Termo = Label(Janela.info_AGR_Sel_Frame, text='Termo ',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
-    frame_Termo_img = Label(Janela.info_AGR_Sel_Frame,image=img_termo,bg=cor_escura)
-    frame_Termo_img.place(x=65,y=y_inicio + y_info*9 + 5)
-
-
-    #if obs != '' :
-    #    frame_Obs = Label(Janela.info_AGR_Sel_Frame, text='Observacoes: ' + obs,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-    #    frame_Obs.place(x=10,y=235)
+    termo = "Termo: " + termo 
+    Janela.frame_Termo.configure(text=termo)
+    try:
+        Janela.frame_Termo_img.configure(image=img_termo)
+    except:
+        Janela.frame_Termo_img = Label(Janela.info_AGR_Sel_Frame,image=img_termo,bg=cor_escura)
+        
+    Janela.frame_Termo_img.place(x=120,y=y_inicio + y_info*9 + 5)
