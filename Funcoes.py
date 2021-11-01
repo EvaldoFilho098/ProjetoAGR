@@ -11,13 +11,14 @@ import img
 #FUNÇÕES
 
 
+
 def Mensagem_Aviso(txt):
     ''' Aviso para caso falte alguma informação válida'''
     messagebox.showerror(title="Impossível Cadastrar Atendimento", message= txt)
 
-def Infos_Agrs(nome,posto, municipio, uf, tel, email, par, termo, status, parceira, treinamento, data ):
+def Infos_Agrs(nome,posto, municipio, uf, tel, email, par, termo, status, parceira, obs, treinamento, data ):
     
-
+    
     if par.upper() == "SIM":
         img_par = Janela.img_sim_men
     else:
@@ -38,42 +39,10 @@ def Infos_Agrs(nome,posto, municipio, uf, tel, email, par, termo, status, parcei
     else:
         img_treino = Janela.img_nao_men 
 
-    Janela.frame_Nome.configure(text=nome)
+    x_info = 10
+    y_info = 27
+    y_inicio = 50
 
-    status = "Status: " + status
-    Janela.frame_Status.configure(text= status)
-    Janela.frame_status_img.configure(image=img_status)
-    Janela.frame_status_img.place(x=130 ,y=y_inicio + 5)
-
-    Janela.frame_Posto.configure(text= "Posto: " + posto)
-
-    Janela.frame_Municipio.configure(text="Cidade: "+ municipio + " - " + uf)
-
-    Janela.frame_Email.configure(text="E-mail: " + email)
-
-    Janela.frame_Tel.configure(text="Telefone: " + tel)
-
-    Janela.frame_Parceiro.configure(text="Parceira: "+ parceira)
-
-    Janela.frame_data.configure(text="Data de Inicio: " + data)
-
-    par = "Parametrização: " + par 
-    Janela.frame_Par.configure(text=par)
-    Janela.frame_Par_img.configure(image=img_par)
-    Janela.frame_Par_img.place(x=185,y=y_inicio + y_info*7 + 5)
-    
-    treinamento = "Treinamento: " + treinamento 
-    Janela.frame_Treino.configure(text=treinamento)
-    Janela.frame_Treino_img.configure(image=img_treino)
-    Janela.frame_Treino_img.place(x=160,y=y_inicio + y_info*8 + 5)
-
-    termo = "Termo: " + termo 
-    Janela.frame_Termo.configure(text=termo)
-    Janela.frame_Termo_img.configure(image=img_termo)
-    Janela.frame_Termo_img.place(x=120,y=y_inicio + y_info*9 + 5)
-
-    
-    """
     frame_Nome = Label(Janela.info_AGR_Sel_Frame, text= nome,bg=cor_escura, fg = cor_contraste, font= fonte_Destaques)
     frame_Nome.place(x=x_info,y=0)
 
@@ -114,7 +83,7 @@ def Infos_Agrs(nome,posto, municipio, uf, tel, email, par, termo, status, parcei
     frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
     frame_Termo_img = Label(Janela.info_AGR_Sel_Frame,image=img_termo,bg=cor_escura)
     frame_Termo_img.place(x=65,y=y_inicio + y_info*9 + 5)
-    """
+
 
     #if obs != '' :
     #    frame_Obs = Label(Janela.info_AGR_Sel_Frame, text='Observacoes: ' + obs,bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
