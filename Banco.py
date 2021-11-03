@@ -58,7 +58,18 @@ def Select_Columns(lista):
     return lista
     
 ###################################################################
+def Select_Distinct(nome):
+    conn,cursor = conectar()
+    comando = "SELECT DISTINCT " + nome + " FROM AGR"
+    
+    cursor.execute(comando)
 
+    lista = []
+    for linha in cursor.fetchall():
+        lista.append(linha[0])
+
+    conn.close()
+    return lista
 
 # alterando os dados da tabela
 def Alterar(up, new, id):

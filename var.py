@@ -4,8 +4,8 @@ import Banco
 data = date.today().strftime("%d/%m/%Y")
 
 #VARIAVEIS DE COR, TAMANHO E FONTE
-largura = 1024
-altura = 600
+largura = 1024 
+altura = 600 
 
 xLabels = 40
 xEntrys = 165
@@ -39,3 +39,7 @@ y_inicio = 50
 colunas_select = ["ID","NOME","CPF","POSTO","MUNICIPIO","UF","STATUS","PARCEIRA",
             "DATA", "PARAMET", "TREINAMENTO","TERMO",
             "TELEFONE","EMAIL"]
+
+lista_posto = Banco.Select_Distinct("POSTO")
+
+lista_cidade = Banco.Select_Distinct("MUNICIPIO")
