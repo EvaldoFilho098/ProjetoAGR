@@ -72,9 +72,8 @@ AGRs_Frame.place(x = 50,y=230)
 #AGRs_Frame.pack(padx=325,pady=130)
 
 ####################################################
-dadosCols = ("ID","NOME","CPF","POSTO","CIDADE","UF","STATUS","PARCEIRA",
-            "DATA INICIO", "PARAMETRIZACAO", "TREINAMENTO","TERMO",
-            "TELEFONE","EMAIL")
+dadosCols = ("ID","NOME","CPF","POSTO","CIDADE","UF",
+            "PARCEIRA","TELEFONE","EMAIL","STATUS")
 listagem = ttk.Treeview(AGRs_Frame,columns = dadosCols,show='headings', height = 100, selectmode='browse')
 
 def Mostrar(event):
@@ -97,20 +96,23 @@ def Mostrar(event):
         posto_ = listagem.item(nodeId_1)['values'][3]
         municipio_ = listagem.item(nodeId_1)['values'][4]
         uf_ = listagem.item(nodeId_1)['values'][5]
-        status_ = listagem.item(nodeId_1)['values'][6]
-        parceira_ = listagem.item(nodeId_1)['values'][7]
-        data_ = listagem.item(nodeId_1)['values'][8]
-        par_ = listagem.item(nodeId_1)['values'][9]
-        trein_ = listagem.item(nodeId_1)['values'][10]
-        termo_ = listagem.item(nodeId_1)['values'][11]
-        telefone_ = listagem.item(nodeId_1)['values'][12]
-        email_ = listagem.item(nodeId_1)['values'][13]
+        
+        parceira_ = listagem.item(nodeId_1)['values'][6]
+        #data_ = listagem.item(nodeId_1)['values'][8]
+        #par_ = listagem.item(nodeId_1)['values'][9]
+        #trein_ = listagem.item(nodeId_1)['values'][10]
+        #termo_ = listagem.item(nodeId_1)['values'][11]
+        telefone_ = listagem.item(nodeId_1)['values'][7]
+        email_ = listagem.item(nodeId_1)['values'][8]
+        status_ = listagem.item(nodeId_1)['values'][9]
 
-        Funcoes.Infos_Agrs(nome_,cpf_,posto_, municipio_, uf_, telefone_, email_, par_, termo_, status_, parceira_, trein_,data_ )
+        Funcoes.Infos_Agrs(nome_,cpf_,posto_, municipio_, uf_, telefone_, email_,status_, parceira_)
     
 
 #print(dadosCols)
 listagem.bind('<Double-1>',Mostrar)
+#listagem.bind('<Button-1>',Mostrar)
+
 minw = 100
 #1
 listagem.column("ID", width = 30,minwidth=30)
@@ -137,17 +139,17 @@ listagem.heading("STATUS",text="STATUS")
 listagem.column("PARCEIRA", width = 30,minwidth=minw)
 listagem.heading("PARCEIRA",text="PARCEIRA")
 #9
-listagem.column("DATA INICIO", width = 50,minwidth=70)
-listagem.heading("DATA INICIO",text="DATA INICIO")
+#listagem.column("DATA INICIO", width = 50,minwidth=70)
+#listagem.heading("DATA INICIO",text="DATA INICIO")
 #10
-listagem.column("PARAMETRIZACAO", width = 30,minwidth=50)
-listagem.heading("PARAMETRIZACAO",text="PARAMETRIZACAO")
+#listagem.column("PARAMETRIZACAO", width = 30,minwidth=50)
+#listagem.heading("PARAMETRIZACAO",text="PARAMETRIZACAO")
 #11
-listagem.column("TREINAMENTO", width = 30,minwidth=60)
-listagem.heading("TREINAMENTO",text="TREINAMENTO")
+#listagem.column("TREINAMENTO", width = 30,minwidth=60)
+#listagem.heading("TREINAMENTO",text="TREINAMENTO")
 #12
-listagem.column("TERMO", width = 30,minwidth=50)
-listagem.heading("TERMO",text="TERMO")
+#listagem.column("TERMO", width = 30,minwidth=50)
+#listagem.heading("TERMO",text="TERMO")
 #13
 listagem.column("TELEFONE", width = 50,minwidth=minw)
 listagem.heading("TELEFONE",text="TELEFONE")
@@ -173,7 +175,11 @@ for c in dadosCols:
 
 # INSRINDO OS ITENS
 for item in Banco.Select_Columns(colunas_select):
-    listagem.insert('', 'end', values=item,)
+    stts = Banco.Select_Where('STATUS','ID',item[0],'SITUACOES')
+    item = list(item)
+    item.append(stts[0])
+    item = tuple(item)
+    listagem.insert('', 'end', values=item)
 
 #AMBIENTE DE INFORMACOES DO AGR SELECIONADO
 info_AGR_Sel_Frame = Frame(Janela, width = 370, height = 325, bg=cor_escura,relief="raise")
@@ -222,8 +228,8 @@ def Excluir():
         frame_Municipio.configure(text='')
         frame_Municipio.place(x=x_info,y=y_inicio + y_info*2)
 
-        frame_Email.configure(text='')
-        frame_Email.place(x=x_info,y=y_inicio + y_info*3)
+        #frame_Email.configure(text='')
+        #frame_Email.place(x=x_info,y=y_inicio + y_info*3)
 
         frame_Tel.configure(text='')
         frame_Tel.place(x=x_info,y=y_inicio + y_info*4)
@@ -231,20 +237,20 @@ def Excluir():
         frame_Parceiro.configure(text='')
         frame_Parceiro.place(x=x_info,y=y_inicio + y_info*5)
 
-        frame_data.configure(text='')
-        frame_data.place(x=x_info,y=y_inicio + y_info*6)
+        #frame_data.configure(text='')
+        #frame_data.place(x=x_info,y=y_inicio + y_info*6)
 
-        frame_Par.configure(text='')
-        frame_Par.place(x=x_info,y=y_inicio + y_info*7)
-        frame_Par_img.destroy()
+        #frame_Par.configure(text='')
+        #frame_Par.place(x=x_info,y=y_inicio + y_info*7)
+        #frame_Par_img.destroy()
 
-        frame_Treino.configure(text='')
-        frame_Treino.place(x=x_info,y=y_inicio + y_info*8)
-        frame_Treino_img.destroy()
+        #frame_Treino.configure(text='')
+        #frame_Treino.place(x=x_info,y=y_inicio + y_info*8)
+        #frame_Treino_img.destroy()
 
-        frame_Termo.configure(text='')
-        frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
-        frame_Termo_img.destroy()
+        #frame_Termo.configure(text='')
+        #frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
+        #frame_Termo_img.destroy()
 
         messagebox.showinfo(title="Sucesso!", message="Cadastro Removido com Sucesso!")
     else:
@@ -263,10 +269,10 @@ def Alterar():
     uf_ = listagem.item(nodeId_1)['values'][5]
     status_ = listagem.item(nodeId_1)['values'][6]
     parceira_ = listagem.item(nodeId_1)['values'][7]
-    data_ = listagem.item(nodeId_1)['values'][8]
-    par_ = listagem.item(nodeId_1)['values'][9]
-    trein_ = listagem.item(nodeId_1)['values'][10]
-    termo_ = listagem.item(nodeId_1)['values'][11]
+    #data_ = listagem.item(nodeId_1)['values'][8]
+    #par_ = listagem.item(nodeId_1)['values'][9]
+    #trein_ = listagem.item(nodeId_1)['values'][10]
+    #termo_ = listagem.item(nodeId_1)['values'][11]
     telefone_ = listagem.item(nodeId_1)['values'][12]
     email_ = listagem.item(nodeId_1)['values'][13]
 
@@ -281,12 +287,12 @@ def Alterar():
     Banco.Alterar("POSTO","",id_)
     Banco.Alterar("MUNICIPIO","",id_)
     Banco.Alterar("UF","",id_)
-    Banco.Alterar("STATUS","",id_)
+    #Banco.Alterar("STATUS","",id_)
     Banco.Alterar("PARCEIRA","",id_)
-    Banco.Alterar("DATA","",id_)
-    Banco.Alterar("PARAMET","",id_)
-    Banco.Alterar("TREINAMENTO","",id_)
-    Banco.Alterar("TERMO","",id_)
+    #Banco.Alterar("DATA","",id_)
+    #Banco.Alterar("PARAMET","",id_)
+    #Banco.Alterar("TREINAMENTO","",id_)
+    #Banco.Alterar("TERMO","",id_)
 
     #cidadeEntry.current(0)
 
@@ -342,21 +348,21 @@ frame_Nome = Label(info_AGR_Sel_Frame, text= '',bg=cor_escura, fg = cor_contrast
 frame_Nome.place(x=x_info,y=0)
 
 frame_cpf = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_cpf.place(x=x_info + 190,y=y_inicio )
+frame_cpf.place(x=x_info,y=y_inicio + y_info)
 
 frame_Status = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Status.place(x=x_info,y=y_inicio )
+frame_Status.place(x=x_info,y=y_inicio)
 frame_status_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
-frame_status_img.place(x=75 ,y=y_inicio + 5) 
+frame_status_img.place(x=130 ,y=y_inicio + 5) 
 
 frame_Posto = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Posto.place(x=x_info,y=y_inicio + y_info)
+frame_Posto.place(x=x_info,y=y_inicio + y_info*2)
 
 frame_Municipio = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Municipio.place(x=x_info,y=y_inicio + y_info*2)
+frame_Municipio.place(x=x_info,y=y_inicio + y_info*3)
 
-frame_Email = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Email.place(x=x_info,y=y_inicio + y_info*3)
+#frame_Email = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+#frame_Email.place(x=x_info,y=y_inicio + y_info*3)
 
 frame_Tel = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
 frame_Tel.place(x=x_info,y=y_inicio + y_info*4)
@@ -364,23 +370,23 @@ frame_Tel.place(x=x_info,y=y_inicio + y_info*4)
 frame_Parceiro = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
 frame_Parceiro.place(x=x_info,y=y_inicio + y_info*5)
 
-frame_data = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_data.place(x=x_info,y=y_inicio + y_info*6)
+#frame_data = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+#frame_data.place(x=x_info,y=y_inicio + y_info*6)
 
-frame_Par = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Par.place(x=x_info,y=y_inicio + y_info*7)
-frame_Par_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
-frame_Par_img.place(x=50,y=y_inicio + y_info*7 + 5)
+#frame_Par = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+#frame_Par.place(x=x_info,y=y_inicio + y_info*7)
+#frame_Par_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+#frame_Par_img.place(x=50,y=y_inicio + y_info*7 + 5)
 
-frame_Treino = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Treino.place(x=x_info,y=y_inicio + y_info*8)
-frame_Treino_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
-frame_Treino_img.place(x=50,y=y_inicio + y_info*8 + 5)
+#frame_Treino = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+#frame_Treino.place(x=x_info,y=y_inicio + y_info*8)
+#frame_Treino_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+#frame_Treino_img.place(x=50,y=y_inicio + y_info*8 + 5)
 
-frame_Termo = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
-frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
-frame_Termo_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
-frame_Termo_img.place(x=50,y=y_inicio + y_info*9 + 5)
+#frame_Termo = Label(info_AGR_Sel_Frame, text='',bg=cor_escura, fg = cor_contraste, font= fonte_Textos)
+#frame_Termo.place(x=x_info,y=y_inicio + y_info*9)
+#frame_Termo_img = Label(info_AGR_Sel_Frame,image=None,bg=cor_escura)
+#frame_Termo_img.place(x=50,y=y_inicio + y_info*9 + 5)
 
 
 #Botao de Editar AGR
