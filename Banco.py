@@ -13,7 +13,7 @@ def Inserir(Nome,cpf,Posto,Municipio,UF,Telefone,Email,Parceira):
     conn,cursor = conectar()
     cursor.execute("""
         INSERT INTO AGR (NOME,CPF,POSTO, MUNICIPIO, UF, TELEFONE, EMAIL, PARCEIRA)
-        VALUES (?,?,?,?,?,?,?,?,?,?)
+        VALUES (?,?,?,?,?,?,?,?)
     """, (Nome,cpf,Posto, Municipio, UF, Telefone, Email,Parceira))
     id = cursor.lastrowid
     conn.commit()

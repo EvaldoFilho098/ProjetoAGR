@@ -469,7 +469,7 @@ def Cadastrar():
             conn,cursor = Banco.conectar()
 
             #Banco.Inserir(nome,cpf,posto,cidade,uf,tel,email,Par,Status,Termo,parc,Trein,data)
-            Banco.Inserir(nome,cpf,posto,cidade,uf,tel,email,'Status',parc)
+            Banco.Inserir(nome,cpf,posto,cidade,uf,tel,email,parc)
 
             #MOSTRA MENSAGEM DE SUCESSO
             messagebox.showinfo(title="SUCESSO!", message="Atendimento Cadastrado com Sucesso!")

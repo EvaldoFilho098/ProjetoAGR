@@ -10,5 +10,6 @@ from tkinter import Tk, StringVar, Frame,Entry,Label,Button,Menu,BooleanVar,Chec
 from tkinter import messagebox
 from var import *
 
-
-Janela.Janela.mainloop()
+instancia = Tk()
+Janela.Janela(instancia)
+instancia.mainloop()

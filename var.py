@@ -16,6 +16,7 @@ entrysWidth = 30
 
 cor_escura = 'grey8'
 cor = "grey13" 
+cor_clara = "grey60" 
 cor_contraste = "white"
 cor_meta = "orange red"
 fonte_Titulos= ("Century Gothic",32)

@@ -53,7 +53,6 @@ class AGR:
         self.Data_Inicio = situ[0][10]
         self.Data_Deslig = situ[0][11]
 
-
         self.Pendencias = []
         self.Aptidao = "0%"
         
@@ -113,6 +112,9 @@ class AGR:
         self.Treinamento = "OK"
     
     def Expirar(self):
+        '''
+        quantos dias faltam para o certificado vencer
+        '''
         hoje = date.today().strftime("%d/%m/%Y")
         hoje = hoje.split('/')
 
@@ -126,9 +128,21 @@ class AGR:
     
     def Tempo_Curso(self):
         '''
-        Quantos dias faltam para expirar o curso
+        Quantos dias faltam para expirar o curso e que dia ele ira expirar
         '''
-        pass
+        hoje = date.today().strftime("%d/%m/%Y")
+        hoje = hoje.split('/')
+        hj = date(day=int(hoje[0]), month=int(hoje[1]), year=int(hoje[2]))
+
+        sol = self.Data_Sol_Curso.split('/')
+        data_sol = date(day=int(sol[0]), month=int(sol[1]), year=int(sol[2]))
+
+        data_exp = data_sol + timedelta(days=15)
+
+        restante = data_exp - hj
+        data_exp = data_exp.strftime("%d/%m/%Y")
+
+        return data_exp,restante.days
     
     def Valor_Tabela_Precos(self,nome,preco):
         if "R$" in str(preco):
@@ -139,7 +153,13 @@ class AGR:
     def Infos(self):
         return self.Nome,self.CPF,self.Cidade,self.UF,self.Posto,self.Email,self.Telefone
     
-    def Situacao(self):
+    def Docs(self):
+        return self.CER,self.CTPS,self.Copia_CPF,self.Copia_Doc,self.Titulo,self.Curriculo,self.Escolaridade,self.Decl_Endereco,self.Roteiro_Entrevista,self.Cert_Curso
+    
+    def Situacoes(self):
+        return self.Status,self.Curso,self.Parametrizacao,self.Treinamento,self.Termo,self.Tabela_Precos,self.Vencimento_Cert,self.Data_Sol_Curso,self.Data_Con_Curso,self.Data_Inicio, self.Data_Deslig,self.Pendencias,self.Aptidao
+    
+    def Situacao(self,x):
         if self.Status == True:
             return "Ativo"
         elif self.Status == False:
@@ -217,22 +237,31 @@ class AGR:
             self.Ativo()
         else:
             self.Pendente()
+    
+    def Atualiza(self):
+        
+        self.Atualiza_Situacao()
+        self.Tempo_Curso()
+        self.Expirar()
 
-x = AGR(13)
+
+x = AGR(14)
 x.Atualiza_Situacao()
 print(x.Pendencias)
 print(x.Aptidao)
 print(x.Status)
+print(x.Expirar())
+print(x.Tempo_Curso())
 
-hoje = date.today().strftime("%d/%m/%Y")
-hoje = hoje.split('/')
+#hoje = date.today().strftime("%d/%m/%Y")
+#hoje = hoje.split('/')
 
-venc = "16/12/2021"
-venc = venc.split("/")
+#venc = "16/12/2021"
+#venc = venc.split("/")
 
-data1 = date(day=int(hoje[0]), month=int(hoje[1]), year=int(hoje[2]))
-data2 = date(day=int(venc[0]), month=int(venc[1]), year=int(venc[2]))
+#data1 = date(day=int(hoje[0]), month=int(hoje[1]), year=int(hoje[2]))
+#data2 = date(day=int(venc[0]), month=int(venc[1]), year=int(venc[2]))
 
-dias =  data2 + timedelta(days=2)
+#dias =  data2 + timedelta(days=2)
 
-print(dias.strftime("%d/%m/%Y"))
+#print(dias.strftime("%d/%m/%Y"))
