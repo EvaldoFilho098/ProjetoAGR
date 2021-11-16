@@ -110,7 +110,7 @@ def Alterar(tabela,up, new, id):
     conn,cursor = conectar()
 
     comando = "UPDATE " + tabela + " SET " + up + "='" + new + "' WHERE ID=" + str(id)
-    print(comando)
+    #print(comando)
     cursor.execute(comando)
     
     conn.commit()

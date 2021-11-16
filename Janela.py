@@ -529,7 +529,7 @@ class Janela:
             self.dataEntry.delete(0, "end")
             self.dataEntry.insert(0, new_text)
 
-    def Cadastrar(self):
+    def Cadastrar__(self):
         #Criar Janela
         self.jan = Tk()
 
@@ -768,7 +768,247 @@ class Janela:
         self.chkPar.state(['!alternate'])
         self.chkPar.place(x= 10,y = y_inicio + y_cad*11 - 20)
         '''
+    
+    def Cadastrar(self):
+        #Criar Janela
+        self.jan = Tk()
+
+        #CONFIGURACOES ----
+        #Titulo
+        self.jan.title("CADASTRO")
+        #Tamanho da Janela
+        self.jan.geometry(str(800)+"x"+str(650))
+        #Cor de Fundo
+        self.jan.configure(background = cor)
+        #Nao redimensionar
+        self.jan.resizable(width = False, height = False)
+        #Transparencia
+        self.jan.attributes("-alpha",0.99)
+
+        x_entry = 95
+        y_inicio = 30
+        y_cad = 55
+        width_entry = 28
+        width_entry_p = 39
+        y_cad2 = 50
+        x_check = 10
+        x_label_check = 40
+
+        ############################################################################
+
+        #AMBIENTE DE DADOS
+        self.cadastroFrame = Frame(self.jan, width = 360, height = 530, bg=cor_escura,relief="raise")
+        self.cadastroFrame.place(x = 20,y=50)
+        self.cadastroLabel = Label(self.jan,text = "DADOS",font=fonte_Mediana, anchor="w", fg=cor_contraste, bg=cor_escura)
+        self.cadastroLabel.place(x = 20, y = 15)
+
+        #NOME
+        self.nomeLabel = Label(self.cadastroFrame,text = "Nome: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.nomeLabel.place(x = 10,y = y_inicio)
+        self.nomeEntry = Entry(self.cadastroFrame, width = width_entry,bg=cor,foreground=cor_contraste,font=fonte_Textos)
+        self.nomeEntry.place(x = x_entry, y = y_inicio)
+
+        #CPF
         
+
+        self.cpfLabel = Label(self.cadastroFrame,text = "CPF: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.cpfLabel.place(x = 10,y = y_inicio + y_cad )
+        self.cpfEntry = Entry(self.cadastroFrame, width = width_entry,bg=cor,foreground=cor_contraste,font=fonte_Textos)
+        self.cpfEntry.bind("<KeyRelease>", self.format_cpf)
+        self.cpfEntry.place(x = x_entry, y = y_inicio + y_cad)
+
+        #POSTO
+        self.postoLabel = Label(self.cadastroFrame,text = "Posto: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.postoLabel.place(x = 10,y = y_inicio + y_cad*2 )
+        self.postoEntry = AutocompleteCombobox(self.cadastroFrame, width = width_entry_p,background=cor,height=15)
+        self.postoEntry.set_completion_list(lista_posto)
+        self.postoEntry.place(x = x_entry, y = y_inicio + y_cad * 2)
+
+        #CIDADE
+        self.cidadeLabel = Label(self.cadastroFrame,text = "Cidade: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.cidadeLabel.place(x = 10,y = y_inicio + y_cad*3 )
+        #lista_cidade = ["Ponta Pora","Campo Grande","Dourados"]
+        self.cidadeEntry = AutocompleteCombobox(self.cadastroFrame, width = width_entry_p,background=cor,height=15)
+        self.cidadeEntry.set_completion_list(lista_cidade)
+        self.cidadeEntry.place(x = x_entry, y = y_inicio + y_cad*3 + 2 )
+
+        #UF
+        self.ufLabel = Label(self.cadastroFrame,text = "UF: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.ufLabel.place(x = 10,y = y_inicio + y_cad*4 )
+        self.lista_uf = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']
+        self.ufEntry = AutocompleteCombobox(self.cadastroFrame, width = width_entry_p,background=cor)
+        self.ufEntry.set_completion_list(self.lista_uf)
+        self.ufEntry.place(x = x_entry, y = y_inicio + y_cad*4 + 2)
+
+        #E-mail
+        self.emailLabel = Label(self.cadastroFrame,text = "E-mail: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.emailLabel.place(x = 10,y = y_inicio + y_cad*5 )
+        self.emailEntry = Entry(self.cadastroFrame, width = width_entry,bg=cor,foreground=cor_contraste,font=fonte_Textos)
+        self.emailEntry.place(x = x_entry, y = y_inicio + y_cad*5)
+
+        #Telefone
+        
+        self.telLabel = Label(self.cadastroFrame,text = "Telefone: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.telLabel.place(x = 10,y = y_inicio + y_cad*6 )
+        self.telEntry = Entry(self.cadastroFrame, width = width_entry,bg=cor,foreground=cor_contraste,font=fonte_Textos)
+        self.telEntry.bind("<KeyRelease>", self.format_tel)
+        self.telEntry.place(x = x_entry, y = y_inicio + y_cad*6)
+
+        #Parceira
+        self.parcLabel = Label(self.cadastroFrame,text = "Parceira: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.parcLabel.place(x = 10,y = y_inicio + y_cad*7 )
+        self.lista_parc = ["Soluti","Meta","Soluti/Meta"]
+        self.parcEntry = AutocompleteCombobox(self.cadastroFrame, width = width_entry_p)
+        self.parcEntry.set_completion_list(self.lista_parc)
+        self.parcEntry.place(x = x_entry, y = y_inicio + y_cad*7 + 2)
+
+        '''
+        #Termo
+        self.TermoLabel = Label(self.cadastroFrame,text = "Termo ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.TermoLabel.place(x= 10,y = y_inicio + y_cad*8 )
+        self.chkTermo = ttk.Checkbutton(self.cadastroFrame,style="TCheckbutton")
+        self.chkTermo.state(['!alternate'])
+        self.chkTermo.place(x= x_entry,y = y_inicio + y_cad*8 + 3)
+
+        '''
+        ####################################################################################
+        
+        #AMBIENTE DE DOCUMENTOS
+        self.docsFrame = Frame(self.jan, width = 360, height = 530, bg=cor_escura,relief="raise")
+        self.docsFrame.place(x = 420,y=50)
+        self.docsLabel = Label(self.jan,text = "DOCUMENTOS",font=fonte_Mediana, anchor="w", fg=cor_contraste, bg=cor_escura)
+        self.docsLabel.place(x = 420, y = 15)
+
+        #.CER
+        self.CERLabel = Label(self.docsFrame,text = "Arquivo .CER ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CERLabel.place(x=x_label_check,y = y_inicio )
+        self.chkCER = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkCER.state(['!alternate'])
+        self.chkCER.place(x=x_check ,y = y_inicio + 3)
+
+        #CTPS
+        self.CTPSLabel = Label(self.docsFrame,text = "CTPS ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CTPSLabel.place(x=x_label_check,y = y_inicio + y_cad2 )
+        self.chkCTPS = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkCTPS.state(['!alternate'])
+        self.chkCTPS.place(x=x_check ,y = y_inicio + y_cad2)
+
+        #Copia CPF
+        self.CPFLabel = Label(self.docsFrame,text = "Cópia do CPF ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CPFLabel.place(x=x_label_check,y = y_inicio + y_cad2*2 )
+        self.chkCCPF = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkCCPF.state(['!alternate'])
+        self.chkCCPF.place(x=x_check ,y = y_inicio + y_cad2*2 + 3)
+
+        #Copia docs
+        self.CDocLabel = Label(self.docsFrame,text = "Cópia de Documento Com Foto ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CDocLabel.place(x=x_label_check,y = y_inicio + y_cad2*3 )
+        self.chkCDoc = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkCDoc.state(['!alternate'])
+        self.chkCDoc.place(x=x_check ,y = y_inicio + y_cad2*3 + 3)
+
+        #Titulo
+        self.TituloLabel = Label(self.docsFrame,text = "Copia do Título de Eleitor ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.TituloLabel.place(x=x_label_check,y = y_inicio + y_cad2*4 )
+        self.chkTitulo = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkTitulo.state(['!alternate'])
+        self.chkTitulo.place(x=x_check ,y = y_inicio + y_cad2*4 + 3)
+
+        #Curriculo
+        self.CurrLabel = Label(self.docsFrame,text = "Curriculo  ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CurrLabel.place(x=x_label_check,y = y_inicio + y_cad2*5 )
+        self.chkCurr = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkCurr.state(['!alternate'])
+        self.chkCurr.place(x=x_check ,y = y_inicio + y_cad2*5 + 3)
+
+        #escolar
+        self.escolarLabel = Label(self.docsFrame,text = "Escolaridade ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.escolarLabel.place(x=x_label_check,y = y_inicio + y_cad2*6 )
+        self.chkescolar = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkescolar.state(['!alternate'])
+        self.chkescolar.place(x=x_check ,y = y_inicio + y_cad2*6 + 3)
+
+        #declaracao de endereco
+        self.DEndLabel = Label(self.docsFrame,text = "Declaração de Endereço ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.DEndLabel.place(x=x_label_check,y = y_inicio + y_cad2*7 )
+        self.chkDEnd = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkDEnd.state(['!alternate'])
+        self.chkDEnd.place(x=x_check ,y = y_inicio + y_cad2*7 + 3)
+
+        #roteiro entrevista
+        self.REntrLabel = Label(self.docsFrame,text = "Roteiro Entrevista ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.REntrLabel.place(x=x_label_check,y = y_inicio + y_cad2*8 )
+        self.chkREntr = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkREntr.state(['!alternate'])
+        self.chkREntr.place(x=x_check ,y = y_inicio + y_cad2*8 + 3)
+
+        #Certificado do Curso de Agr
+        self.CursoLabel = Label(self.docsFrame,text = "Certificado do Curso de AGR ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CursoLabel.place(x=x_label_check,y = y_inicio + y_cad2*9 )
+        self.chkCurso = ttk.Checkbutton(self.docsFrame,style="TCheckbutton")
+        self.chkCurso.state(['!alternate'])
+        self.chkCurso.place(x=x_check ,y = y_inicio + y_cad2*9 + 3)
+
+        ######################################################################
+
+        #AMBIENTE DE PROGRESSO
+        self.progFrame = Frame(self.jan, width = 360, height = 530, bg=cor_escura,relief="raise")
+        self.progFrame.place(x = 820,y=50)
+        self.progLabel = Label(self.jan,text = "PROGRESSO",font=fonte_Mediana, anchor="w", fg=cor_contraste, bg=cor_escura)
+        self.progLabel.place(x = 820, y = 15)
+
+        #Curso de Agr
+        self.CursoLabel = Label(self.progFrame,text = "Curso de AGR ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.CursoLabel.place(x=10,y = y_inicio )
+        self.lista_situacoes = ['Concluído','Em Andamento','Não Solicitado']
+        self.CursoEntry = AutocompleteCombobox(self.progFrame, width = 30,background=cor)
+        self.CursoEntry.set_completion_list(self.lista_situacoes)
+        self.CursoEntry.place(x=140 ,y = y_inicio+ 3)
+
+        #Parametrizacao
+        self.ParametLabel = Label(self.progFrame,text = "Parametrização ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.ParametLabel.place(x=x_label_check,y = y_inicio + y_cad2 )
+        self.chkParamet = ttk.Checkbutton(self.progFrame,style="TCheckbutton")
+        self.chkParamet.state(['!alternate'])
+        self.chkParamet.place(x=x_check ,y = y_inicio + y_cad2 + 3)
+        
+        #Treinamento
+        self.TreinLabel = Label(self.progFrame,text = "Treinamento ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.TreinLabel.place(x=x_label_check + 200,y = y_inicio + y_cad2 )
+        self.chkTrein = ttk.Checkbutton(self.progFrame,style="TCheckbutton")
+        self.chkTrein.state(['!alternate'])
+        self.chkTrein.place(x=x_check+200,y = y_inicio + y_cad2 + 3)
+
+
+        style = ttk.Style()
+        style.configure("TCheckbutton", foreground="white", background="black",font=('Helvetica', 22))
+        
+
+        '''
+        #Data
+
+        self.dataLabel = Label(self.cadastroFrame,text = "Data: ",font=fonte_Textos, anchor="w", fg=cor_contraste, bg=cor)
+        self.dataLabel.place(x = 10,y = y_inicio + y_cad*8 )
+        self.dataEntry = Entry(self.cadastroFrame, width = width_entry,bg=cor,foreground=cor_contraste,font=fonte_Textos)
+        self.dataEntry.bind("<KeyRelease>", format_data)
+        self.dataEntry.place(x = x_entry, y = y_inicio + y_cad*8)
+        self.dataEntry.insert(0, data)
+
+        #Status
+        self.chkStatus = ttk.Checkbutton(self.cadastroFrame, text='Ativo')
+        self.chkStatus.state(['!alternate'])
+        self.chkStatus.place(x= 10,y = y_inicio + y_cad*9)
+
+        #Treinamento
+        self.chkTrein = ttk.Checkbutton(self.cadastroFrame,text='Treinamento')
+        self.chkTrein.state(['!alternate'])
+        self.chkTrein.place(x= 10,y = y_inicio + y_cad*10 - 10)
+
+        #Parametrização
+        self.chkPar = ttk.Checkbutton(self.cadastroFrame,text='Parametrização')
+        self.chkPar.state(['!alternate'])
+        self.chkPar.place(x= 10,y = y_inicio + y_cad*11 - 20)
+        '''
 
 
     def Salvar(self):

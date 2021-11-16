@@ -244,14 +244,15 @@ class AGR:
         self.Tempo_Curso()
         self.Expirar()
 
-
-x = AGR(14)
+"""x = AGR(14)
 x.Atualiza_Situacao()
 print(x.Pendencias)
 print(x.Aptidao)
 print(x.Status)
 print(x.Expirar())
 print(x.Tempo_Curso())
+"""
+
 
 #hoje = date.today().strftime("%d/%m/%Y")
 #hoje = hoje.split('/')
